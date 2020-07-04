@@ -54,7 +54,7 @@ for i in range(iters_num):
 
 # グラフの描画
 markers = {'train': 'o', 'test': 's'}
-x = np.arange(len(train_loss_list))
+x = np.arange(len(train_acc_list))
 plt.plot(x, train_acc_list, label='train acc')
 plt.plot(x, test_acc_list, label='test acc', linestyle='--')
 plt.xlabel("epochs")
