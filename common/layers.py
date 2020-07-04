@@ -1,4 +1,5 @@
 import numpy as np
+from common.functions import *
 
 class Relu:
     def __init__(self):
@@ -47,7 +48,7 @@ class Affine:
         self.original_x_shape = x.shape
         x = x.reshape(x.shape[0], -1)
         self.x = x
-        
+
         out = np.dot(self.x, self.W) + self.b
         return out
     
@@ -58,4 +59,23 @@ class Affine:
 
         # 入力データの形状に戻す（テンソル対応）
         dx = dx.reshape(*self.original_x_shape)
+        return dx
+
+class SoftmaxWithLoss:
+    def __init__(self):
+        self.loss = None    # 損失
+        self.y = None       # softmax の出力
+        self.t = None       # 教師データ (one-hot vector)
+    
+    def forward(self, x, t):
+        self.t = t
+        self.y = softmax(x)
+        self.loss = cross_entropy_error(self.y, self.t)
+        
+        return self.loss
+    
+    def backward(self, dout=1):
+        batch_size = self.t.shape[0]
+        dx = (self.y - self.t) / batch_size
+
         return dx
