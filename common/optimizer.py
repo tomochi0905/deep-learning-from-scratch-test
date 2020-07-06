@@ -6,7 +6,7 @@ class SGD:
         self.lr = lr
     
     def update(self, params, grads):
-        for key in params.key():
+        for key in params.keys():
             params[key] -= self.lr * grads[key]
 
 # Momentum SGD
@@ -22,7 +22,7 @@ class Momentum:
             for key, val in params.items():
                 self.v[key] = np.zeros_like(val)
         
-        for key in params.key():
+        for key in params.keys():
             self.v[key] = self.momentum * self.v[key] - self.lr * grads[key]
             params[key] += self.v[key]
 
@@ -38,7 +38,7 @@ class AdaGrad:
             for key, val in params.items():
                 self.h[key] = np.zeros_like(val)
         
-        for key in params.key():
+        for key in params.keys():
             self.h[key] += grads[key] * grads[key]
             params[key] -= self.lr * grads[key] / (np.sqrt(self.h[key]) + 1e-7)
 
